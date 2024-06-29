@@ -13,4 +13,5 @@ router.put('/api/usuarios/:id', controler.updateUsuario);
 router.delete('/api/usuarios/eliminar', controler.eliminarUsuario);
 
 
+
 module.exports= router;

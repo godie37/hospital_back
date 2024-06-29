@@ -7,6 +7,7 @@ const tablaUserUser= 'usuarios__usuarios';
 async function listarUsuarios (req, res) {
     try {
         const items= await db.listar(tablaUserUser);
+        //res.render('/api/usuarios',{usuarios: items, totalU: items.length });
         respuesta.success(req, res, items, 200);
     } catch (error) {
         respuesta.error(req, res, error, 500);
