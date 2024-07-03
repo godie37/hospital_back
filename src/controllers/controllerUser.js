@@ -16,8 +16,9 @@ async function listarUsuarios (req, res) {
 
 // Mostrar un usuario.:::::::::::::::::::::::::::::: - OK
 async function mostrarUnUsuario (req, res) {
+    
     try{
-        const items= await db.mostrarUno(tablaUserUser, req.params.id);
+        const items= await db.mostrarUno(tablaUserUser, req.params.username);
         respuesta.success(req, res, items, 200);
     }catch(error){
         respuesta.error(req, res, error, 500);
@@ -27,7 +28,9 @@ async function mostrarUnUsuario (req, res) {
 
 // nuevo usuario.::::::::::::::::::::::::::::::: - OK
 async function nuevoUsuario(req, res){
+   
     try {
+
         await db.cargar(tablaUserUser, req.body);
         respuesta.success(req, res, 'Usuario cargado Correctamente...::::::::::::::::::::::::::::::', 200);        
     } catch (error) {
@@ -38,24 +41,24 @@ async function nuevoUsuario(req, res){
 
 // update usuario.:::::::::::::::::::::::::::::::
 async function updateUsuario(req, res){
-    // Arreglo con los campos a validar
+    // Crea un arreglo con los campos a validar
     const campos = ["nombre", "apellido", "nombre_completo", "username", "email", "password", "rol_id"];
     let query = `UPDATE ${tablaUserUser} SET `;
 
-    //Concateno los campos de la query
+    //Concatena los campos de la query
     for (const campo of campos) {
         if (req.body[campo]) {
             query += `${campo} = "${req.body[campo]}", `;
         }
     }
 
-    // Elimino los dos últimos caracteres (", ")
+    // Elimina los dos últimos caracteres (", ")
     query = query.slice(0, -2);
 
-    // Agrego la condición WHERE
-    query += ` WHERE id= ${req.params.id}`;
+    // Agrega la condición WHERE
+    query += ` WHERE nombre= "${req.params.nombre}"`;
 
-    console.log(query);
+    console.log('REQ:PARAMS...:::::: -->> ', req.params);
 
     try {
         await db.update(query);

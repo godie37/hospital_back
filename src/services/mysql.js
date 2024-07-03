@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const config = require('../config');
 
 //Datos de conexion a la DB.
@@ -48,9 +48,10 @@ function listar(tabla) {
 
 
 // Mostrar. ::::::::::::::::::::::::::::: - OK
-function mostrarUno(tabla, id) {
+function mostrarUno(tabla, username) {
+    
     return new Promise((resolve, reject) => {
-        conexion.query(`SELECT * FROM ${tabla} WHERE id= ${id}`, (error, result) => {
+        conexion.query(`SELECT * FROM ${tabla} WHERE username= "${username}"`, (error, result) => {  
             return error ? reject(error) : resolve(result);
         })
     })
@@ -58,14 +59,16 @@ function mostrarUno(tabla, id) {
 
 // Nuevo. ::::::::::::::::::::::::::::  - OK
 function cargar(tabla, data) {
+    
     return new Promise((resolve, reject) => {
+
         conexion.query(`INSERT INTO ${tabla} SET ?`, data, (error, result) => {
             return error ? reject(error) : resolve(result);
         });
     });
 }
 
-// Updatge medico.::::::::::::::::::::::::::::  - OK
+// Updatge. ::::::::::::::::::::::::::::  - OK
 function update(query) {
     return new Promise((resolve, reject) => {
         conexion.query(query, (error, result) => {
@@ -74,7 +77,7 @@ function update(query) {
     })
 }
 
-// Eliminar un medico.:::::::::::::::::::::::::::: - OK
+// Eliminar. :::::::::::::::::::::::::::: - OK
 function eliminarMedico(tabla, data) {
     return new Promise((resolve, reject) => {
         conexion.query(`DELETE FROM ${tabla} WHERE id= ?`, data, (error, result) => {
