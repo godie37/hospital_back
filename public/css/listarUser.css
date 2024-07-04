@@ -28,26 +28,34 @@ option{
     margin: 15px 0px 15px 0px;
     text-align: center;
 }
+.divEliminar{
+    margin: 15px 0px 15px 0px;
+    
+}
 
-
-#enviarUser{
+#guardarUser{
     padding: 10px 30px 10px 30px;
     border-radius: 5px;
     font-size: 18px;
     color: rgb(179, 61, 61);
 }
-#enviarUser:hover, #searchButton:hover{
+#guardarUser:hover, #eliminarUser:hover, #searchButton:hover{
     border-radius: 3px;
     font-size: 20px;
     color: black;
     background-color: #daefef;
 }
 
+#eliminarUser:hover{
+    background-color: red;
+    color: white;
+}
+
 #usernameInput{
     padding-right: 45px;
     font-size: 20px;
 }
-#searchButton{
+#searchButton, #eliminarUser{
     padding: 1px 20px 1px 20px;
     border-radius: 5px;
     font-size: 20px;

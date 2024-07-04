@@ -78,9 +78,10 @@ function update(query) {
 }
 
 // Eliminar. :::::::::::::::::::::::::::: - OK
-function eliminarMedico(tabla, data) {
+function eliminar(tabla, data) {
+    console.log('DATA.......:::::::::::  -->',data);
     return new Promise((resolve, reject) => {
-        conexion.query(`DELETE FROM ${tabla} WHERE id= ?`, data, (error, result) => {
+        conexion.query(`DELETE FROM ${tabla} WHERE username= "${data}"`, (error, result) => {
             return error ? reject(error) : resolve(result);
         })
     })
@@ -91,5 +92,5 @@ module.exports = {
     mostrarUno,
     cargar,
     update,
-    eliminarMedico,
+    eliminar,
 }

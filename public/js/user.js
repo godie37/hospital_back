@@ -1,7 +1,7 @@
 // ************     Crear usuario.    ************     - OK -
-const button = document.getElementById('enviarUser');
+const guardarUser = document.getElementById('guardarUser');
 
-button.addEventListener('click', async (event) => {
+guardarUser.addEventListener('click', async (event) => {
   event.preventDefault();
 
   const user = {
@@ -51,15 +51,32 @@ searchButton.addEventListener('click', async () => {
     } else {
       alert('Usuario no encontrado.');
     }
+
   } catch (error) {
     console.error('Error al buscar usuario:', error);
     alert('Error al buscar usuario.');
   }
-});
 
+  //  ****   ELIMINAR USUARIO   ****
+ const eliminarUser = document.getElementById('eliminarUser');
+
+ eliminarUser.addEventListener('click', async (evento) => {
+   evento.preventDefault();
+   try {
+     await fetch(`http://localhost:3000/api/usuarios/eliminar/${userName}`, { method: 'DELETE' });
+
+     console.log('Usuario eliminado corectamnte....');
+     alert('Usuario eliminado.');
+   } catch (error) {
+     console.error('Error al eliminar usuario:', error);
+     alert('Error al eliminar usuario.');
+   }
+ });
+
+});
 function mostrarResultadosBusqueda(userData) {
   const [usuario] = userData.body;
-  
+
   const contenedorSearchUsuarios = document.querySelector("#searchId tbody"); // Seleccionar el cuerpo de la tabla
   contenedorSearchUsuarios.innerHTML = ""; // Limpiar el contenido existente
 

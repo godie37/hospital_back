@@ -72,11 +72,14 @@ async function updateUsuario(req, res){
 
 // // Borrar un usuario.:::::::::::::::::::::::::::: - OK
 async function eliminarUsuario (req, res) {
+    // console.log('REQ.....::::::: --> ',req);
+    // console.log('REQ.BODY.....::::::: --> ',req.body);
+     console.log('REQ.params.USERNAME....::::::: --> ',req.params.username);
     try{
-        const items= await db.eliminarUsuario(tablaUserUser, body.id);
+        const items= await db.eliminar(tablaUserUser, req.params.username);
         respuesta.success(req, res, 'Item eliminado satisfactoriamente...', 200);
     }catch(error){
-        console.log(respuesta.error);
+        console.log(error);
         respuesta.error(req, res, error, 500);
     }
 }
