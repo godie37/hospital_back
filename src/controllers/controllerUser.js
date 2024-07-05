@@ -3,6 +3,28 @@ const respuesta= require('../utils/respuestas');
 const tablaUserUser= 'usuarios__usuarios';
 
 
+
+//  **********  TESTEANDO   **********
+
+
+async function validar(req){
+        console.log('REQ.BODY.USERNAME::::::::::::::::--> ', req.body.username)
+        console.log('REQ.BODY.MAIL::::::::::::::::--> ', req.body.email)
+    try {
+        await db.validacion(tablaUserUser, req.body.username, req.body.email);
+        
+    } catch (error) {
+        console.log('ERROR....   --> ',error);
+    }
+}
+                                                                                                                                                                                        
+
+
+
+
+
+
+
 // Listar Usuarios.:::::::::::::::::::::::::::::::: - OK
 async function listarUsuarios (req, res) {
     try {
@@ -58,8 +80,6 @@ async function updateUsuario(req, res){
     // Agrega la condición WHERE
     query += ` WHERE nombre= "${req.params.nombre}"`;
 
-    console.log('REQ:PARAMS...:::::: -->> ', req.params);
-
     try {
         await db.update(query);
         respuesta.success(req, res, 'Usuario actualizado Correctamente...++++++++++++++++++++++++++', 201);
@@ -72,9 +92,6 @@ async function updateUsuario(req, res){
 
 // // Borrar un usuario.:::::::::::::::::::::::::::: - OK
 async function eliminarUsuario (req, res) {
-    // console.log('REQ.....::::::: --> ',req);
-    // console.log('REQ.BODY.....::::::: --> ',req.body);
-     console.log('REQ.params.USERNAME....::::::: --> ',req.params.username);
     try{
         const items= await db.eliminar(tablaUserUser, req.params.username);
         respuesta.success(req, res, 'Item eliminado satisfactoriamente...', 200);
@@ -92,4 +109,5 @@ module.exports= {
     nuevoUsuario,
     updateUsuario,
     eliminarUsuario,
+    validar,
 }

@@ -15,7 +15,7 @@
 
   <!-- CSS General -->
   <link rel="stylesheet" href="../css/general.css">
-  <link rel="stylesheet" href="../css/listarUser.css">
+  <link rel="stylesheet" href="../css/users.css">
 
 </head>
 
@@ -62,113 +62,32 @@
   <main class="contenedor">
     <section class="estructura_contenido">
       <div>
-        <h1> Usuarios</h1>
+        <h1> Listado de Usuarios</h1>
       </div>
 
-      <section class="new-user-form">
-        <div>
-          <h3>Cargar datos de nuevo usuario</h3>
-        </div>
-        <section>
-          <table id="new-user">
-            <thead>
-              <tr class="thead-menu-new">
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Nombre Completo</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Contraseña</th>
-                <th>Rol</th>
-              </tr>
-            </thead>
-            <tbody>
-              <form id="newUser">
-                <tr>
-                  <td> <input type="text" class="form-control" id="new-nombre" name="nombre" required> </td>
-                  <td> <input type="text" class="form-control" id="new-apellido" name="apellido" required> </td>
-                  <td> <input type="text" class="form-control" id="new-nombre_completo" name="nombre_completo" required>
-                  </td>
-                  <td> <input type="text" class="form-control" id="new-username" name="username" required> </td>
-                  <td> <input type="email" class="form-control" id="new-mail" name="mail" required> </td>
-                  <td> <input type="password" class="form-control" id="new-pass" name="pass" required> </td>
-                  <td> <select class="form-control" id="new-rolid" name="rolid" required>
-                    <option value="1">Usuario</option>
-                      <option value="2">Medico</option>
-                    </select>
-                  </td>
-                </tr>
-              </form>
-            </tbody>
-          </table>
-          <div class="bt-guardar"> 
-            <input type="submit" id="guardarUser" name="guardarUser" value="Guardar"></input>
-          </div>
-        </section>
-        <hr>
-        <section class="search-user-form">
-          <div>
-            <h3>Buscar usuario por nombre de usuario</h3>
-          </div>
-          <section>
-            <div class="search-container">
-              <label for="usernameInput">Nombre de usuario:</label>
-              <input type="text" id="usernameInput" name="usernameInput" placeholder="ingrese nombre de usuario">
-              <button id="searchButton">Buscar</button>
-            </div>
-            <table id="searchId">
-              <thead>
-                <tr class="thead-menu-search">
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Nombre Completo</th>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Password</th>
-                  <th>Rol</th>
-                </tr>
-              </thead>
-              <tbody> </tbody>
-            </table>
+      <hr>
+      <section class="list-user">
+        <table id="user">
+          <thead>
+            <tr class="search-user">
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Nombre Completo</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </section>
 
-            </div>
-            <div class="divEliminar">
-              <input type="submit" id="eliminarUser" name="eliminarUser" value="Eliminar"></input>
-            </div>
-          </section>
-
-        </section>
-        <hr>
-
-        <section class="list-user">
-          <h3>Listado de usuarios</h3>
-          <table id="user">
-            <thead>
-              <tr class="search-user">
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Nombre Completo</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Rol</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </section>
-
-        <hr>
-        <!--
-         <section>
-          <button>Actualizar</button>
-        </section>
-      </section> -->
+      <hr>
   </main>
 
-  <script src="../js/user.js"> </script>
+  <script src="../js/listarUser.js"> </script>
 
   <footer class="pie_pagina">
     <p>NodeJS || Grupo 2 - Codo a Codo 2024</p>

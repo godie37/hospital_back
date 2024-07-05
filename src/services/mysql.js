@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const config = require('../config');
+const { query } = require('express');
 
 //Datos de conexion a la DB.
 const dbconfig = {
@@ -86,11 +87,25 @@ function eliminar(tabla, data) {
         })
     })
 }
+function validacion(tabla, username, mail) {
 
+    const query=(`SELECT * FROM ${tabla} WHERE username= "${username}" `);
+    
+    console.log("VALIDACION..:::::  --> ",query);
+
+    return new Promise((resolve, reject) => {
+        conexion.query( query, (error, result)=> {
+            return error ? reject(error) : resolve(result);
+        })
+    })
+}
+
+//SELECT * FROM `usuarios__usuarios` WHERE `username` = 'godie37' AND `email` = 'godie37@gmail.com'
 module.exports = {
     listar,
     mostrarUno,
     cargar,
     update,
     eliminar,
+    validacion,
 }
