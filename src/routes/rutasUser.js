@@ -15,4 +15,5 @@ router.delete('/api/validar', controler.validar);
 
 
 
+
 module.exports= router;
