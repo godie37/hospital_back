@@ -3,6 +3,28 @@ const respuesta= require('../utils/respuestas');
 const tablaUserUser= 'usuarios__usuarios';
 
 
+
+//  **********  TESTEANDO   **********
+
+
+async function validar(req){
+        console.log('REQ.BODY.USERNAME::::::::::::::::--> ', req.body.username)
+        console.log('REQ.BODY.MAIL::::::::::::::::--> ', req.body.email)
+    try {
+        await db.validacion(tablaUserUser, req.body.username, req.body.email);
+        
+    } catch (error) {
+        console.log('ERROR....   --> ',error);
+    }
+}
+                                                                                                                                                                                        
+
+
+
+
+
+
+
 // Listar Usuarios.:::::::::::::::::::::::::::::::: - OK
 async function listarUsuarios (req, res) {
     try {
@@ -17,8 +39,9 @@ async function listarUsuarios (req, res) {
 
 // Mostrar un usuario.:::::::::::::::::::::::::::::: - OK
 async function mostrarUnUsuario (req, res) {
+    
     try{
-        const items= await db.mostrarUno(tablaUserUser, req.params.id);
+        const items= await db.mostrarUno(tablaUserUser, req.params.username);
         respuesta.success(req, res, items, 200);
     }catch(error){
         respuesta.error(req, res, error, 500);
@@ -28,7 +51,9 @@ async function mostrarUnUsuario (req, res) {
 
 // nuevo usuario.::::::::::::::::::::::::::::::: - OK
 async function nuevoUsuario(req, res){
+   
     try {
+
         await db.cargar(tablaUserUser, req.body);
         respuesta.success(req, res, 'Usuario cargado Correctamente...::::::::::::::::::::::::::::::', 200);        
     } catch (error) {
@@ -39,24 +64,22 @@ async function nuevoUsuario(req, res){
 
 // update usuario.:::::::::::::::::::::::::::::::
 async function updateUsuario(req, res){
-    // Arreglo con los campos a validar
+    // Crea un arreglo con los campos a validar
     const campos = ["nombre", "apellido", "nombre_completo", "username", "email", "password", "rol_id"];
     let query = `UPDATE ${tablaUserUser} SET `;
 
-    //Concateno los campos de la query
+    //Concatena los campos de la query
     for (const campo of campos) {
         if (req.body[campo]) {
             query += `${campo} = "${req.body[campo]}", `;
         }
     }
 
-    // Elimino los dos últimos caracteres (", ")
+    // Elimina los dos últimos caracteres (", ")
     query = query.slice(0, -2);
 
-    // Agrego la condición WHERE
-    query += ` WHERE id= ${req.params.id}`;
-
-    console.log(query);
+    // Agrega la condición WHERE
+    query += ` WHERE nombre= "${req.params.nombre}"`;
 
     try {
         await db.update(query);
@@ -71,10 +94,10 @@ async function updateUsuario(req, res){
 // // Borrar un usuario.:::::::::::::::::::::::::::: - OK
 async function eliminarUsuario (req, res) {
     try{
-        const items= await db.eliminarUsuario(tablaUserUser, body.id);
+        const items= await db.eliminar(tablaUserUser, req.params.username);
         respuesta.success(req, res, 'Item eliminado satisfactoriamente...', 200);
     }catch(error){
-        console.log(respuesta.error);
+        console.log(error);
         respuesta.error(req, res, error, 500);
     }
 }
@@ -87,4 +110,5 @@ module.exports= {
     nuevoUsuario,
     updateUsuario,
     eliminarUsuario,
+    validar,
 }

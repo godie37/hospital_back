@@ -7,10 +7,12 @@ const router= express.Router();
 
 
 router.get('/api/usuarios', controler.listarUsuarios);
-router.get('/api/usuarios/:id', controler.mostrarUnUsuario);
+router.get('/api/usuarios/:username', controler.mostrarUnUsuario);
 router.post('/api/usuarios/new', controler.nuevoUsuario);
-router.put('/api/usuarios/:id', controler.updateUsuario);
-router.delete('/api/usuarios/eliminar', controler.eliminarUsuario);
+router.put('/api/usuarios/update/:nombre', controler.updateUsuario);
+router.delete('/api/usuarios/eliminar/:username', controler.eliminarUsuario);
+router.delete('/api/validar', controler.validar);
+
 
 
 

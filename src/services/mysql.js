@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const config = require('../config');
+const { query } = require('express');
 
 //Datos de conexion a la DB.
 const dbconfig = {
@@ -48,9 +49,10 @@ function listar(tabla) {
 
 
 // Mostrar. ::::::::::::::::::::::::::::: - OK
-function mostrarUno(tabla, id) {
+function mostrarUno(tabla, username) {
+    
     return new Promise((resolve, reject) => {
-        conexion.query(`SELECT * FROM ${tabla} WHERE id= ${id}`, (error, result) => {
+        conexion.query(`SELECT * FROM ${tabla} WHERE username= "${username}"`, (error, result) => {  
             return error ? reject(error) : resolve(result);
         })
     })
@@ -58,14 +60,16 @@ function mostrarUno(tabla, id) {
 
 // Nuevo. ::::::::::::::::::::::::::::  - OK
 function cargar(tabla, data) {
+    
     return new Promise((resolve, reject) => {
+
         conexion.query(`INSERT INTO ${tabla} SET ?`, data, (error, result) => {
             return error ? reject(error) : resolve(result);
         });
     });
 }
 
-// Updatge medico.::::::::::::::::::::::::::::  - OK
+// Updatge. ::::::::::::::::::::::::::::  - OK
 function update(query) {
     return new Promise((resolve, reject) => {
         conexion.query(query, (error, result) => {
@@ -74,19 +78,34 @@ function update(query) {
     })
 }
 
-// Eliminar un medico.:::::::::::::::::::::::::::: - OK
-function eliminarMedico(tabla, data) {
+// Eliminar. :::::::::::::::::::::::::::: - OK
+function eliminar(tabla, data) {
+    console.log('DATA.......:::::::::::  -->',data);
     return new Promise((resolve, reject) => {
-        conexion.query(`DELETE FROM ${tabla} WHERE id= ?`, data, (error, result) => {
+        conexion.query(`DELETE FROM ${tabla} WHERE username= "${data}"`, (error, result) => {
+            return error ? reject(error) : resolve(result);
+        })
+    })
+}
+function validacion(tabla, username, mail) {
+
+    const query=(`SELECT * FROM ${tabla} WHERE username= "${username}" `);
+    
+    console.log("VALIDACION..:::::  --> ",query);
+
+    return new Promise((resolve, reject) => {
+        conexion.query( query, (error, result)=> {
             return error ? reject(error) : resolve(result);
         })
     })
 }
 
+//SELECT * FROM `usuarios__usuarios` WHERE `username` = 'godie37' AND `email` = 'godie37@gmail.com'
 module.exports = {
     listar,
     mostrarUno,
     cargar,
     update,
-    eliminarMedico,
+    eliminar,
+    validacion,
 }
