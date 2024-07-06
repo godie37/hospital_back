@@ -4,30 +4,9 @@ import {
     cargar,
     update,
     eliminar,
-    validacion,
 } from '../services/mysql.js';
 import { success, error as _error } from '../utils/respuestas.js';
 const tablaUserUser = 'usuarios__usuarios';
-
-
-
-//  **********  TESTEANDO   **********
-
-
-async function validar(req) {
-    console.log('REQ.BODY.USERNAME::::::::::::::::--> ', req.body.username)
-    console.log('REQ.BODY.MAIL::::::::::::::::--> ', req.body.email)
-    try {
-        await validacion(tablaUserUser, req.body.username, req.body.email);
-
-    } catch (error) {
-        console.log('ERROR....   --> ', error);
-    }
-}
-
-
-
-
 
 
 
@@ -48,7 +27,7 @@ async function listarUsuarios(req, res) {
 
 // Mostrar un usuario.:::::::::::::::::::::::::::::: - OK
 async function mostrarUnUsuario(req, res) {
-
+    
     try {
         const items = await mostrarUno(tablaUserUser, req.params.username);
         success(req, res, items, 200);
@@ -118,5 +97,4 @@ export default {
     nuevoUsuario,
     updateUsuario,
     eliminarUsuario,
-    validar,
 }
