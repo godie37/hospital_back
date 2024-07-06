@@ -1,3 +1,38 @@
+// ************     Crear usuario.    ************     - OK -
+const button = document.getElementById('guardarUser');
+
+button.addEventListener('click', async (event) => {
+  event.preventDefault();
+
+  const user = {
+    nombre: document.getElementById("new-nombre").value,
+    apellido: document.getElementById('new-apellido').value,
+    nombre_completo: document.getElementById('new-nombre_completo').value,
+    username: document.getElementById('new-username').value,
+    email: document.getElementById('new-mail').value,
+    password: document.getElementById('new-pass').value,
+    rol_id: document.getElementById('new-rolid').value,
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/api/usuarios/new', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user),
+    });
+    const responseData = await response.json();
+    console.log('Usuario creado:', responseData);
+    alert('Usuario creado correctamente.');
+  } catch (error) {
+    console.error('Error al crear usuario:', error);
+    alert('Hubo un error al crear el usuario.');
+  }
+});
+
+
 //************     Buscar x username.    ************     - OK -
 const usernameInput = document.getElementById('usernameInput');
 const searchButton = document.getElementById('searchButton');

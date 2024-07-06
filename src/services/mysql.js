@@ -15,16 +15,6 @@ export async function listar(tabla,res) {
         res.status(500).send('Error en la consulta')
      }
 
-
-
-
-    // return new Promise((resolve, reject) => {
-    //     const [rows] = awaitpool.query(`SELECT * FROM ${tabla}`, (error, result) => {
-    //         // SIMPLIFICO EL IF/ELSE RESOLVE.
-    //         return error ? reject(error) : resolve(result);
-    //     })
-    // });
-
 }
 
 
@@ -41,13 +31,15 @@ export async function mostrarUno(tabla, username) {
 
 // Nuevo. ::::::::::::::::::::::::::::  - OK
 export async function cargar(tabla, data) {
-    const connection = await pool.getConnection()
-    return new Promise((resolve, reject) => {
-        pool.query(`INSERT INTO ${tabla} SET ?`, data, (error, result) => {
-            connection.release()
-            return error ? reject(error) : resolve(result);
-        });
-    });
+    try {
+        const connection = await pool.getConnection();    
+        pool.query(`INSERT INTO ${tabla} SET ?`, data,);
+        connection.release();
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Error en la consulta')
+    }
+    
 }
 
 // Updatge. ::::::::::::::::::::::::::::  - OK

@@ -60,7 +60,6 @@ async function mostrarUnUsuario(req, res) {
 
 // nuevo usuario.::::::::::::::::::::::::::::::: - OK
 async function nuevoUsuario(req, res) {
-
     try {
 
         await cargar(tablaUserUser, req.body);
