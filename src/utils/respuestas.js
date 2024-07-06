@@ -1,4 +1,4 @@
-exports.success= (req, res, mensaje= '', status= 200)=> {
+export function success(req, res, mensaje= '', status= 200) {
     res.status(status).send({
         error: false,
         status: status,
@@ -6,7 +6,7 @@ exports.success= (req, res, mensaje= '', status= 200)=> {
     });
 }
 
-exports.error= (req, res, mensaje= 'Error Interno!', status= 500)=>{
+export function error(req, res, mensaje= 'Error Interno!', status= 500){
     res.status(status).send({
         error: true,
         status: status,

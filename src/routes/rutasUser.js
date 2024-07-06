@@ -1,9 +1,9 @@
-const express= require('express');
+import { Router } from 'express';
 
-const controler= require('../controllers/controllerUser');
+import controler from '../controllers/controllerUser.js';
 
 
-const router= express.Router();
+const router= Router();
 
 
 router.get('/api/usuarios', controler.listarUsuarios);
@@ -16,4 +16,4 @@ router.delete('/api/validar', controler.validar);
 
 
 
-module.exports= router;
+export default router;

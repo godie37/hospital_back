@@ -1,23 +1,30 @@
-const db= require('../services/mysql');
-const respuesta= require('../utils/respuestas');
-const tablaUserUser= 'usuarios__usuarios';
+import {
+    listar,
+    mostrarUno,
+    cargar,
+    update,
+    eliminar,
+    validacion,
+} from '../services/mysql.js';
+import { success, error as _error } from '../utils/respuestas.js';
+const tablaUserUser = 'usuarios__usuarios';
 
 
 
 //  **********  TESTEANDO   **********
 
 
-async function validar(req){
-        console.log('REQ.BODY.USERNAME::::::::::::::::--> ', req.body.username)
-        console.log('REQ.BODY.MAIL::::::::::::::::--> ', req.body.email)
+async function validar(req) {
+    console.log('REQ.BODY.USERNAME::::::::::::::::--> ', req.body.username)
+    console.log('REQ.BODY.MAIL::::::::::::::::--> ', req.body.email)
     try {
-        await db.validacion(tablaUserUser, req.body.username, req.body.email);
-        
+        await validacion(tablaUserUser, req.body.username, req.body.email);
+
     } catch (error) {
-        console.log('ERROR....   --> ',error);
+        console.log('ERROR....   --> ', error);
     }
 }
-                                                                                                                                                                                        
+
 
 
 
@@ -26,44 +33,46 @@ async function validar(req){
 
 
 // Listar Usuarios.:::::::::::::::::::::::::::::::: - OK
-async function listarUsuarios (req, res) {
+async function listarUsuarios(req, res) {
     try {
-        const items= await db.listar(tablaUserUser);
+        const items = await listar(tablaUserUser, res);
+
+        res.json(items)
         //res.render('/api/usuarios',{usuarios: items, totalU: items.length });
-        respuesta.success(req, res, items, 200);
+        // success(req, res, items, 200);
     } catch (error) {
-        respuesta.error(req, res, error, 500);
+        _error(req, res, error, 500);
     }
 };
 
 
 // Mostrar un usuario.:::::::::::::::::::::::::::::: - OK
-async function mostrarUnUsuario (req, res) {
-    
-    try{
-        const items= await db.mostrarUno(tablaUserUser, req.params.username);
-        respuesta.success(req, res, items, 200);
-    }catch(error){
-        respuesta.error(req, res, error, 500);
+async function mostrarUnUsuario(req, res) {
+
+    try {
+        const items = await mostrarUno(tablaUserUser, req.params.username);
+        success(req, res, items, 200);
+    } catch (error) {
+        _error(req, res, error, 500);
     }
 };
 
 
 // nuevo usuario.::::::::::::::::::::::::::::::: - OK
-async function nuevoUsuario(req, res){
-   
+async function nuevoUsuario(req, res) {
+
     try {
 
-        await db.cargar(tablaUserUser, req.body);
-        respuesta.success(req, res, 'Usuario cargado Correctamente...::::::::::::::::::::::::::::::', 200);        
+        await cargar(tablaUserUser, req.body);
+        success(req, res, 'Usuario cargado Correctamente...::::::::::::::::::::::::::::::', 200);
     } catch (error) {
-        respuesta.error(req, res, error, 500);
+        _error(req, res, error, 500);
     }
 }
 
 
 // update usuario.:::::::::::::::::::::::::::::::
-async function updateUsuario(req, res){
+async function updateUsuario(req, res) {
     // Crea un arreglo con los campos a validar
     const campos = ["nombre", "apellido", "nombre_completo", "username", "email", "password", "rol_id"];
     let query = `UPDATE ${tablaUserUser} SET `;
@@ -82,29 +91,29 @@ async function updateUsuario(req, res){
     query += ` WHERE nombre= "${req.params.nombre}"`;
 
     try {
-        await db.update(query);
-        respuesta.success(req, res, 'Usuario actualizado Correctamente...++++++++++++++++++++++++++', 201);
+        await update(query);
+        success(req, res, 'Usuario actualizado Correctamente...++++++++++++++++++++++++++', 201);
     } catch (error) {
-        respuesta.error(req, res, error, 500);
+        _error(req, res, error, 500);
     }
 }
 
 
 
 // // Borrar un usuario.:::::::::::::::::::::::::::: - OK
-async function eliminarUsuario (req, res) {
-    try{
-        const items= await db.eliminar(tablaUserUser, req.params.username);
-        respuesta.success(req, res, 'Item eliminado satisfactoriamente...', 200);
-    }catch(error){
+async function eliminarUsuario(req, res) {
+    try {
+        const items = await eliminar(tablaUserUser, req.params.username);
+        success(req, res, 'Item eliminado satisfactoriamente...', 200);
+    } catch (error) {
         console.log(error);
-        respuesta.error(req, res, error, 500);
+        _error(req, res, error, 500);
     }
 }
 
 
 
-module.exports= {
+export default {
     listarUsuarios,
     mostrarUnUsuario,
     nuevoUsuario,

@@ -1,0 +1,112 @@
+label {
+   font-weight: 700;
+}
+
+.form_medicos {
+   padding: 20px 5px;
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
+}
+
+.campos_form {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+.caja_inputs {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+}
+
+.bloque_check {
+   display: flex;
+   flex-wrap: wrap;
+   padding: 5px 0;
+   column-gap: 2rem;
+   row-gap: 0.5rem;
+}
+
+.bloque_btn_abm {
+   display: flex;
+   gap: 2rem;
+   padding: 0 10px;
+}
+
+.btn_enviar_abm,
+.btn_volver_abm {
+   width: 90%;
+   font-weight: 700;
+   border: 1px solid rgb(97, 96, 96);
+   border-radius: 5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   -ms-border-radius: 5px;
+   -o-border-radius: 5px;
+   padding: 5px 10px;
+   text-decoration: none;
+   text-align: center;
+   color: white;
+}
+
+.btn_enviar_abm {
+   background-color: rgb(0, 180, 0);
+}
+
+.btn_enviar_abm:hover {
+   background-color: rgba(3, 255, 3, 0.986);
+}
+
+.btn_volver_abm {
+   background-color: rgb(255, 0, 0);
+}
+
+.btn_volver_abm:hover {
+   background-color: rgb(255, 42, 42);
+}
+
+.enlace_volver {
+   color: black;
+   text-decoration: none;
+}
+
+
+@media screen and (min-width: 725px) {
+
+   .campos_form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 40px;
+      row-gap: 25px;
+   }
+
+   .form_medicos {
+      padding: 20px;
+   }
+
+   .bloque_horario {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+   }
+
+   .bloque_btn_abm {
+      justify-content: space-around;
+      padding: 0;
+   }
+
+   .btn_enviar_abm,
+   .btn_volver_abm {
+      width: 40%;
+   }
+}
+
+@media screen and (min-width: 1024px) {
+   .bloque_btn_abm {
+      justify-content: center;
+      gap: 4rem;
+      padding: 0;
+   }
+}
