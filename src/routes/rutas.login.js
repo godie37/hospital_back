@@ -9,6 +9,8 @@ import {
    logoutPost
 } from '../controllers/ctrl.auth.js';
 
+import { validacionRegister, validacionLogin, validacionResetPass } from '../middleware/midd.auth.js'
+
 const router = express.Router();
 
 router.get('/login', (req, res) => {
@@ -18,7 +20,7 @@ router.get('/login', (req, res) => {
       res.redirect('/inicio')
    }
 });
-router.post('/login', iniciarSesionPost);
+router.post('/login', validacionLogin, iniciarSesionPost);
 
 router.get('/register', (req, res) => {
    if (!req.session.autenticado) {
@@ -27,7 +29,7 @@ router.get('/register', (req, res) => {
       res.redirect('/inicio')
    }
 });
-router.post('/register', crearUsuarioPost);
+router.post('/register', validacionRegister, crearUsuarioPost);
 
 router.get('/reset_password', (req, res) => {
    if (!req.session.autenticado) {
@@ -36,7 +38,7 @@ router.get('/reset_password', (req, res) => {
       res.redirect('/inicio')
    }
 });
-router.post('/reset_password', cambioPasswordPost);
+router.post('/reset_password', validacionResetPass, cambioPasswordPost);
 
 router.post('/logout', logoutPost);
 

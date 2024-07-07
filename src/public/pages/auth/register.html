@@ -22,18 +22,22 @@
             class="text-xl font-bold leading-tight text-center tracking-tight text-gray-900 md:text-2xl dark:text-white uppercase">
             Crear cuenta
           </h1>
-          <form class="space-y-4 md:space-y-6" action="/register" method="POST">
+          <div hidden id="bloque_errores"></div>
+          <form class="space-y-4 md:space-y-6" method="post" id="form_register">
             <div>
               <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
               <input type="nombre" name="nombre" id="nombre"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Ingrese su nombre">
+              <span class="hidden" id="error_nombre"></span>
             </div>
             <div>
-              <label for="apellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
+              <label for="apellido"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
               <input type="apellido" name="apellido" id="apellido"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Ingrese su apellido">
+              <span class="hidden" id="error_apellido"></span>
             </div>
             <div>
               <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de
@@ -41,28 +45,29 @@
               <input type="username" name="username" id="username"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Ingrese su nombre de usuario">
+              <span class="hidden" id="error_username"></span>
             </div>
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
               <input type="email" name="email" id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Ingrese su email">
+              <span class="hidden" id="error_email"></span>
             </div>
             <div>
               <label for="password"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
               <input type="password" name="password" id="password" placeholder="Ingrese su password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <span class="hidden" id="error_password"></span>
             </div>
             <div>
-              <label for="confirm-password"
+              <label for="confirm_password"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar
                 password</label>
-              <input type="password" name="confirm-password" id="confirm-password"
-              placeholder="Confirme su password"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
+              <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirme su password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <span class="hidden" id="error_confirm_password"></span>
             </div>
             <button type="submit"
               class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 uppercase border-2 border-gray-300">Crear
@@ -79,8 +84,13 @@
     </div>
   </section>
 
+
+     <!-- SWEET ALERT -->
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- TAILWIND -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="../../js/login.js" type="module"></script>
 </body>
 
 </html>

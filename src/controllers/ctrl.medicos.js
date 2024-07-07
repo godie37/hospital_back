@@ -57,13 +57,13 @@ export const crearMedicoPost = async (req, res) => {
          connection.release()
 
          if (result.affectedRows === 0) {
-            res.status(500).json({ 'estado': 'error', mensaje: 'No se pudo crear médico' })
+            res.status(401).json({ 'estado': 'error', mensaje: 'No se pudo crear médico' })
          } else {
             res.status(200).json({ 'estado': 'success', mensaje: 'Médico Creado' })
          }
 
       } else {
-         res.status(500).json({ 'estado': 'error', mensaje: 'La matricula ingresada ya existe en el sistema' })
+         res.status(401).json({ 'estado': 'error', mensaje: 'La matricula ingresada ya existe en el sistema' })
       }
 
    } catch (error) {
@@ -99,12 +99,12 @@ export const editarMedicoPost = async (req, res) => {
          connection.release()
 
          if (result.affectedRows === 0) {
-            res.status(500).json({ 'estado': 'error', mensaje: 'No se pudo actualizar el médico' })
+            res.status(401).json({ 'estado': 'error', mensaje: 'No se pudo actualizar el médico' })
          } else {
             res.status(200).json({ 'estado': 'success', mensaje: 'Médico editado' })
          }
       } else {
-         res.status(500).json({ 'estado': 'error', mensaje: 'La matricula ingresada pertenece a otro médico' })
+         res.status(401).json({ 'estado': 'error', mensaje: 'La matricula ingresada pertenece a otro médico' })
       }
 
    } catch (error) {
@@ -139,7 +139,7 @@ export const solicitarTurnoPost = async (req, res) => {
       connection.release()
 
       if (result.affectedRows === 0) {
-         res.status(500).json({ 'estado': 'error', mensaje: 'No se logró guardar el turno' })
+         res.status(401).json({ 'estado': 'error', mensaje: 'No se logró guardar el turno' })
       } else {
          res.status(200).json({ 'estado': 'success', mensaje: 'Turno agendado' })
       }
@@ -159,7 +159,7 @@ export const buscarAgendaGet = async (req, res) => {
       connection.release()
 
       if (result.length === 0) {
-         res.status(500).json({ estado: 'sinResultados', mensaje: 'No hay turnos en la fecha solicitada' })
+         res.status(401).json({ estado: 'sinResultados', mensaje: 'No hay turnos en la fecha solicitada' })
       } else {
          res.status(200).json({ estado: 'success', resultado: result })
       }
