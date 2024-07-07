@@ -4,30 +4,9 @@ import {
     cargar,
     update,
     eliminar,
-    validacion,
 } from '../services/mysql.js';
 import { success, error as _error } from '../utils/respuestas.js';
 const tablaUserUser = 'usuarios__usuarios';
-
-
-
-//  **********  TESTEANDO   **********
-
-
-async function validar(req) {
-    console.log('REQ.BODY.USERNAME::::::::::::::::--> ', req.body.username)
-    console.log('REQ.BODY.MAIL::::::::::::::::--> ', req.body.email)
-    try {
-        await validacion(tablaUserUser, req.body.username, req.body.email);
-
-    } catch (error) {
-        console.log('ERROR....   --> ', error);
-    }
-}
-
-
-
-
 
 
 
@@ -36,10 +15,7 @@ async function validar(req) {
 async function listarUsuarios(req, res) {
     try {
         const items = await listar(tablaUserUser, res);
-
         res.json(items)
-        //res.render('/api/usuarios',{usuarios: items, totalU: items.length });
-        // success(req, res, items, 200);
     } catch (error) {
         _error(req, res, error, 500);
     }
@@ -48,7 +24,6 @@ async function listarUsuarios(req, res) {
 
 // Mostrar un usuario.:::::::::::::::::::::::::::::: - OK
 async function mostrarUnUsuario(req, res) {
-
     try {
         const items = await mostrarUno(tablaUserUser, req.params.username);
         success(req, res, items, 200);
@@ -60,9 +35,7 @@ async function mostrarUnUsuario(req, res) {
 
 // nuevo usuario.::::::::::::::::::::::::::::::: - OK
 async function nuevoUsuario(req, res) {
-
     try {
-
         await cargar(tablaUserUser, req.body);
         success(req, res, 'Usuario cargado Correctamente...::::::::::::::::::::::::::::::', 200);
     } catch (error) {
@@ -88,22 +61,27 @@ async function updateUsuario(req, res) {
     query = query.slice(0, -2);
 
     // Agrega la condición WHERE
-    query += ` WHERE nombre= "${req.params.nombre}"`;
+    query += ` WHERE id= "${req.params.id}"`;
+
+    console.log('QUERY.................. ', query);
 
     try {
         await update(query);
         success(req, res, 'Usuario actualizado Correctamente...++++++++++++++++++++++++++', 201);
+        
     } catch (error) {
         _error(req, res, error, 500);
+        console.log('ERROR...... ', error);
     }
 }
 
 
 
-// // Borrar un usuario.:::::::::::::::::::::::::::: - OK
+// // Eliminar un usuario.:::::::::::::::::::::::::::: - OK
 async function eliminarUsuario(req, res) {
+    console.log('res.params.id   :::::::  ', req.params.id)
     try {
-        const items = await eliminar(tablaUserUser, req.params.username);
+        const items = await eliminar(tablaUserUser, req.params.id);
         success(req, res, 'Item eliminado satisfactoriamente...', 200);
     } catch (error) {
         console.log(error);
@@ -119,5 +97,4 @@ export default {
     nuevoUsuario,
     updateUsuario,
     eliminarUsuario,
-    validar,
 }

@@ -3,13 +3,13 @@ async function listarUsuarios() {
   try {
     const respuesta = await fetch("http://localhost:3000/api/usuarios");
     const datos = await respuesta.json();
-
-    const usuarios = datos.body;
+    //const usuarios = datos.body;
+    console.log('datos.body::::::::::::::::::::: ', datos);
     const contenedorUsuarios = document.querySelector("#user tbody"); // Selecciona el cuerpo de la tabla
 
     contenedorUsuarios.innerHTML = ""; // Limpia el contenido existente
 
-    usuarios.forEach((usuario) => {
+    datos.forEach((usuario) => {
       const fila = document.createElement("tr"); // Crea una fila de la tabla
 
       const celdaId = document.createElement("td");
