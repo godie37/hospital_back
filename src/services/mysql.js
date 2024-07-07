@@ -26,16 +26,14 @@ export async function mostrarUno(tabla, username) {
             `SELECT * FROM ${tabla} WHERE username = '${username}'`
         );
         connection.release();
-        return result; // Devolver el resultado de la consulta en lugar de usar success()
+        return result;
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Error en la consulta')
     }
 }
 
-// const connection = await pool.getConnection()
-// pool.query(`SELECT * FROM ${tabla} WHERE username= '${username}'`)
-// connection.release();
+
 
 
 
@@ -65,15 +63,17 @@ export async function update(query) {
 
 // Eliminar. :::::::::::::::::::::::::::: - OK
 export async function eliminar(tabla, data) {
-    const connection = await pool.getConnection()
-    console.log('DATA.......:::::::::::  -->', data);
-    return new Promise((resolve, reject) => {
-        pool.query(`DELETE FROM ${tabla} WHERE username= "${data}"`, (error, result) => {
-            connection.release()
-            return error ? reject(error) : resolve(result);
-        })
-    })
+    try {
+        const connection = await pool.getConnection()
+        await connection.query(`DELETE FROM ${tabla} WHERE id= ?`,data)
+        connection.release();
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Error al eliminar usuario.')
+    }
+
 }
+
 export async function validacion(tabla, username, mail) {
     const query = (`SELECT * FROM ${tabla} WHERE username= "${username}" `);
     console.log("VALIDACION..:::::  --> ", query);

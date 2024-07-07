@@ -54,7 +54,7 @@ searchButton.addEventListener('click', async () => {
   }
 });
 
-
+// ************     MOSTRA RESULTADO BUSQUEDA.    ************     - OK -
 function mostrarResultadosBusqueda(userData) {
   const [usuario] = userData.body[0];
   
@@ -77,54 +77,45 @@ function mostrarResultadosBusqueda(userData) {
   
 }
 
-//**************************************************************/
-//**************************************************************/
-//**************************************************************/
- 
 
-// //****   ELIMINAR USUARIO   ****   - OK -
+// ************     ELIMINAR POR ID.    ************     - OK -
 
-// async function eliminarUsuario() {
-//   console.log('username.... ', userName);
+const botonEliminar= document.getElementById('eliminarUser');
+botonEliminar.addEventListener('click', async ()=>{
+  const deleteUserName= prompt("Ingrese el ID del usuario que desea eliminar:")
+  if(deleteUserName){
+    const result= eliminarUsuario(deleteUserName);
+  }
   
-//   if (confirm("¿Esta seguro?") == true) {
-//     try {
-//       await fetch(`http://localhost:3000/api/usuarios/eliminar/${userName}`, { method: 'DELETE' });
-      
-//       console.log('Usuario eliminado corectamnte....');
-//       alert('Usuario eliminado.');
-//     } catch (error) {
-//       console.error('Error al eliminar usuario:', error);
-//       alert('Error al eliminar usuario.');
-//     }
-//   } else {
-//     alert('Operacion cancelada.');
-//   }
-// }
+})
 
-//*-------------------------------  GEMINI  -------------------------------------------------------------*/
-//*-------------------------------  GEMINI  -------------------------------------------------------------*/
-//*-------------------------------  GEMINI  -------------------------------------------------------------*/
+async function eliminarUsuario(data) {  
+  if (confirm("¿Está seguro de eliminar el usuario?")) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/usuarios/eliminar/${data}`, {
+          method: 'DELETE',
+          });
+          if (response.ok) {
+            console.log('Usuario eliminado correctamente.');
+            alert('Usuario eliminado.');
+            
+          } else {
+            console.error('Error al eliminar usuario:', response.statusText);
+            alert('Error al eliminar usuario.');
+          }
+        } catch (error) {
+          console.error('Error al eliminar usuario:', error);
+          alert('Error al eliminar usuario.');
+        }
+      }
+    }
+    //**************************************************************/
+    //**************************************************************/
+    //**************************************************************/
+    
+    
+    
 
-
-// async function buscarUsuario() {
-//   const userName = document.querySelector("#userName").value;
-
-//   try {
-  //     const response = await fetch(`http://localhost:3000/api/usuarios/${userName}`);
-  //     const userData = await response.json();
-
-//     if (userData) {
-//       mostrarResultados(userData);
-//     } else {
-//       alert('Usuario no encontrado.');
-//     }
-
-//   } catch (error) {
-//     console.error('Error al buscar usuario:', error);
-//     alert('Usuario no encontrado.');
-//   }
-// }
 
 // const editarButton= document.getElementById("editarButton");
 

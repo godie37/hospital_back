@@ -15,10 +15,7 @@ const tablaUserUser = 'usuarios__usuarios';
 async function listarUsuarios(req, res) {
     try {
         const items = await listar(tablaUserUser, res);
-
         res.json(items)
-        //res.render('/api/usuarios',{usuarios: items, totalU: items.length });
-        // success(req, res, items, 200);
     } catch (error) {
         _error(req, res, error, 500);
     }
@@ -27,7 +24,6 @@ async function listarUsuarios(req, res) {
 
 // Mostrar un usuario.:::::::::::::::::::::::::::::: - OK
 async function mostrarUnUsuario(req, res) {
-    
     try {
         const items = await mostrarUno(tablaUserUser, req.params.username);
         success(req, res, items, 200);
@@ -40,7 +36,6 @@ async function mostrarUnUsuario(req, res) {
 // nuevo usuario.::::::::::::::::::::::::::::::: - OK
 async function nuevoUsuario(req, res) {
     try {
-
         await cargar(tablaUserUser, req.body);
         success(req, res, 'Usuario cargado Correctamente...::::::::::::::::::::::::::::::', 200);
     } catch (error) {
@@ -78,10 +73,11 @@ async function updateUsuario(req, res) {
 
 
 
-// // Borrar un usuario.:::::::::::::::::::::::::::: - OK
+// // Eliminar un usuario.:::::::::::::::::::::::::::: - OK
 async function eliminarUsuario(req, res) {
+    console.log('res.params.id   :::::::  ', req.params.id)
     try {
-        const items = await eliminar(tablaUserUser, req.params.username);
+        const items = await eliminar(tablaUserUser, req.params.id);
         success(req, res, 'Item eliminado satisfactoriamente...', 200);
     } catch (error) {
         console.log(error);
