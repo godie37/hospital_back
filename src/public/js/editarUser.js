@@ -107,26 +107,60 @@ async function eliminarUsuario(data) {
           console.error('Error al eliminar usuario:', error);
           alert('Error al eliminar usuario.');
         }
-      }
+   }
+}
+
+
+//**************************************************************/
+//**************************************************************/
+//**************************************************************/
+    
+const editarButton= document.getElementById('EditarUser');
+editarButton.addEventListener('click', async ()=> {
+  const editUsername= prompt("Ingrese username del usuario para editar:")
+  if(editUsername){
+    const result= editarUsuario(editUsername);
+  }
+})
+
+async function editarUsuario(userName) {
+
+  try {
+    const response = await fetch(`http://localhost:3000/api/usuarios/${userName}`);
+    const userData = await response.json();
+    
+    if (userData) {
+      const result= mostrarResultadosEditable(userData);
+    } else {
+      alert('Usuario no encontrado.');
     }
-    //**************************************************************/
-    //**************************************************************/
-    //**************************************************************/
-    
-    
-    
+  } catch (error) {
+    console.error('Input en blanco. No se escribio ningun username', error);
+    alert('Ingrese un nombre de usuario valido.');
+  }
+}
 
-
-// const editarButton= document.getElementById("editarButton");
-
-// editarButton.addEventListener('click', async () => {
-//     if (userData) {
-//       mostrarResultadosEditable(userData);
-//     } else {
-//       alert('Usuario no encontrado. Perrrrrro');
-//     }
-// });
-
+function mostrarResultadosEditable(userData) {
+  const [usuario] = userData.body[0];
+  
+  const contenedorSearchUsuarios = document.querySelector("#editId tbody");
+  contenedorSearchUsuarios.innerHTML = "";
+  
+  const filaSearch = document.createElement("tr"); 
+  
+  for (const propiedad in usuario) {
+    if (usuario.hasOwnProperty(propiedad)) {
+      const valor = usuario[propiedad];
+      
+      const celdaSearch = document.createElement("td");
+      celdaSearch.textContent = valor;
+      filaSearch.appendChild(celdaSearch);
+    }
+  }
+  
+  contenedorSearchUsuarios.appendChild(filaSearch);
+  
+}
 
 // function mostrarResultadosEditable(datosUsuario) {
 //   const [usuario] = datosUsuario.body;
