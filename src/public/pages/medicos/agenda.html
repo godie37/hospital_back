@@ -31,26 +31,36 @@
 				<div class="collapse navbar-collapse bg-transparent" id="navbarNavDropdown">
 					<ul class="navbar-nav text-center nav-pills">
 						<li class="nav-item">
-							<a class="nav-link enlaces text-uppercase" aria-current="page" href="/inicio"><box-icon name='home-alt-2'></box-icon> Inicio</a>
+							<a class="nav-link enlaces text-uppercase" aria-current="page" href="/inicio"><box-icon
+								  name='home-alt-2'></box-icon> Inicio</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link enlaces text-uppercase" href="/caps"><box-icon type='solid'
 								  name='institution'></box-icon> CAPS</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link enlaces text-uppercase" href="/turnero"><box-icon name='receipt'></box-icon> Sacar turno</a>
+							<a class="nav-link enlaces text-uppercase" href="/turnero"><box-icon name='receipt'></box-icon>
+								Sacar turno</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link enlaces text-uppercase activo" href="/agenda"><box-icon name='book-content'></box-icon> Agenda turnos</a>
+							<a class="nav-link enlaces text-uppercase activo" href="/agenda"><box-icon
+								  name='book-content'></box-icon> Agenda turnos</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link enlaces text-uppercase" href="/medicos"><box-icon name='universal-access'></box-icon> Personal Médico</a>
+							<a class="nav-link enlaces text-uppercase" href="/medicos"><box-icon
+								  name='universal-access'></box-icon> Personal Médico</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link enlaces text-uppercase" href="/contacto"><box-icon name='message-dots'></box-icon> Contacto</a>
+							<a class="nav-link enlaces text-uppercase" href="/contacto"><box-icon
+								  name='message-dots'></box-icon> Contacto</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link enlaces text-uppercase" href="/login"><box-icon type='solid' name='user'></box-icon> Login</a>
+						</li>
+						<li class="nav-item">
+							<form action="/logout" method="post" id="form_logout">
+								<button class="nav-link enlaces text-uppercase" type="submit" style="border:transparent;"><box-icon type='solid' name='user-x'></box-icon>Logout</button>
+							</form>
 						</li>
 					</ul>
 				</div>
@@ -61,7 +71,7 @@
 	<main class="contenedor">
 		<section class="estructura_contenido">
 			<h1>Agenda de turnos</h1>
-			<article class="consultar_agenda" id="consultar_agenda">
+			<form class="consultar_agenda" id="form_agenda">
 				<div class="bloque_inputs">
 					<label for="listarMedicos" class="form-label">Médicos</label>
 					<select name="listarMedicos" id="listarMedicos" class="form-select">
@@ -73,11 +83,11 @@
 					<input type="date" name="fecha_turnos" id="fecha_turnos" class="form-control">
 				</div>
 				<div class="bloque_btn">
-					<button class="btn_agenda" id="btn_agenda">Buscar</button>
+					<button class="btn_agenda" id="btn_agenda" type="submit">Buscar</button>
 					<button id="btn_volver" hidden>Nueva búsqueda</button>
 				</div>
-			</article>
-
+			</form>
+			<h3 id="tit_dias_atencion" hidden></h3>
 			<hr>
 
 			<article class="listar_agenda" id="listar_agenda">
@@ -112,7 +122,8 @@
 	  crossorigin="anonymous"></script>
 
 	<!-- JS -->
-	<script src="../../js/agenda.js"></script>
+	<script src="../../js/medicos/agenda.js" type="module"></script>
+	<script src="../js/validador_session.js" type="module"></script>
 </body>
 
 </html>

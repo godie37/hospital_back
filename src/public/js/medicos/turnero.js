@@ -1,4 +1,6 @@
 import { validacionBlur } from "../validaciones.js";
+import { recuperarUser } from '../validador_session.js'
+
 let selectListaMedicos = document.getElementById("listaMedico");
 let inputMes = document.getElementById("mes");
 let bloque_fecha = document.getElementById("bloque_fecha");
@@ -213,44 +215,6 @@ btn_volver.addEventListener("click", (e) => {
 	form.reset()
 });
 
-
-// FALTA RECUPERAR EL USUARIO
-btn_enviar.addEventListener("click", (e) => {
-	e.preventDefault();
-
-	document.getElementById('medicoSeleccionado').value = medicoSeleccionado.id
-	document.getElementById('usuarioSolicitante').value = ''
-	document.getElementById('diaTurno').value = fechaCompleta
-
-	let claves_form = {
-		'nombre_completo': document.getElementById('nombre_completo').value,
-		'dni': document.getElementById('dni').value,
-		'telefono': document.getElementById('telefono').value,
-		'es_obra_social': document.getElementById('es_obra_social').value,
-		'derivacion': document.getElementById('derivacion').value,
-		'adjunto_derivacion': document.getElementById('adjunto_derivacion').value,
-		'horario': document.getElementById('horario').value
-	}
-
-	if (validacionBlur(claves_form)) {
-		Swal.fire({
-			title: "Guardar turno?",
-			icon: "question",
-			showConfirmButton: true,
-			confirmButtonColor: "#379237",
-			confirmButtonText: "Confirmar",
-			showCancelButton: true,
-			cancelButtonColor: "#FF1E1E",
-			cancelButtonText: `Cancelar`,
-		}).then((result) => {
-			if (result.isConfirmed) {
-				form.submit()
-			}
-		});
-	}
-});
-
-
 // Genero el formulario para solicitar el turno
 function generarFormularioTurnero() {
 	dias.style.display = "none";
@@ -310,4 +274,74 @@ function contador(franja) {
 	return franja;
 }
 
-// Ver si se puede agregar la fecha en el formulario de solicitud de turno, para que quede claro para que día es el turno
+// FALTA RECUPERAR EL USUARIO
+form.addEventListener('submit', async e => {
+	e.preventDefault()
+
+	let respuesta
+
+	let claves_form = {
+		'nombre_completo': document.getElementById('nombre_completo').value,
+		'dni': document.getElementById('dni').value,
+		'telefono': document.getElementById('telefono').value,
+		'es_obra_social': document.getElementById('es_obra_social').checked,
+		'derivacion': document.querySelector('input[name="derivacion"]:checked').value,
+		'adjunto_derivacion': document.getElementById('adjunto_derivacion').value,
+	}
+
+	if (validacionBlur(claves_form)) {
+		claves_form.horario_turno = new Date(fechaCompleta + ' ' + document.getElementById('horario').value)
+		claves_form.medico_id = medicoSeleccionado.id
+
+		claves_form.usuario_id = recuperarUser()
+
+		const res_db = await fetch('/turnero', {
+			method: 'POST',
+			headers: {
+				"Content-Type": 'application/json'
+			},
+			body: JSON.stringify(claves_form)
+		})
+			.then(res => res.json())
+			.then(data => respuesta = data)
+
+
+		if (respuesta.estado != 'validacion') {
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 1200,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.onmouseenter = Swal.stopTimer;
+					toast.onmouseleave = Swal.resumeTimer;
+				}
+			});
+			Toast.fire({
+				icon: `${respuesta.estado}`,
+				title: `${respuesta.mensaje}`
+			});
+
+			if (respuesta.estado == 'success') {
+				setTimeout(() => {
+					form.reset()
+					window.location.href = '/turnero'
+				}, 1000);
+			}
+		} else {
+			let msj_error = JSON.parse(respuesta.mensajes)
+			// Muestro los errores del servidor
+			Object.entries(msj_error).forEach(([key, value]) => {
+				document.getElementById('error_' + key).innerHTML = value
+				document.getElementById('error_' + key).setAttribute('style', 'color:red; font-weight: 700;')
+			});
+		}
+
+
+
+	}
+
+
+
+})

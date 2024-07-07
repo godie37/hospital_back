@@ -1,7 +1,6 @@
 import pool from '../config/db.js';
 import bcrypt from 'bcrypt';
 
-
 export const crearUsuarioPost = async (req, res) => {
    try {
 
@@ -26,27 +25,29 @@ export const crearUsuarioPost = async (req, res) => {
 
 export const iniciarSesionPost = async (req, res) => {
    try {
-      const { email, password } = req.body;
+      const { username, password } = req.body;
 
       const connection = await pool.getConnection()
-      const [usuario] = await connection.query('SELECT * FROM usuarios__usuarios WHERE email = ?', [email])
+      const [user] = await connection.query('SELECT * FROM usuarios__usuarios WHERE username = ?', [username])
       connection.release()
 
-      if (usuario.length == 0) {
-         return res.status(401).send('Usuario no encontrado');
+      if (user.length == 0) {
+         return res.status(401).json({ 'estado': 'error_username', 'mensaje': 'Nombre de usuario incorrecto' });
       }
 
-      const match = await bcrypt.compare(password, usuario[0].password);
+      const match = await bcrypt.compare(password, user[0].password);
       if (match) {
          req.session.autenticado = true;
-         req.session.rol = usuario[0].rol_id;
-         res.status(200).redirect('/inicio')
+         req.session.user = user[0];
+         req.session.save((err) => {
+            res.status(200).redirect('/inicio')
+         })
       } else {
-         res.status(401).send('Login fallido');
+         res.status(401).json({ 'estado': 'error_password', 'mensaje': 'Contraseña incorrecta' });
       }
    } catch (error) {
       console.error(error.message)
-      res.status(500).send('Error en la consulta')
+      res.status(500).json({ 'estado': 'error', 'mensaje': 'Login fallido' })
    }
 }
 

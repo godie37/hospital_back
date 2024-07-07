@@ -1,6 +1,7 @@
 import express from 'express';
 import { __dirname } from '../app.js'
 
+
 import {
    iniciarSesionPost,
    crearUsuarioPost,
@@ -11,17 +12,29 @@ import {
 const router = express.Router();
 
 router.get('/login', (req, res) => {
-   res.sendFile(__dirname + '/public/pages/auth/login.html');
+   if (!req.session.autenticado) {
+      res.sendFile(__dirname + '/public/pages/auth/login.html');
+   } else {
+      res.redirect('/inicio')
+   }
 });
 router.post('/login', iniciarSesionPost);
 
 router.get('/register', (req, res) => {
-   res.sendFile(__dirname + '/public/pages/auth/register.html');
+   if (!req.session.autenticado) {
+      res.sendFile(__dirname + '/public/pages/auth/register.html');
+   } else {
+      res.redirect('/inicio')
+   }
 });
 router.post('/register', crearUsuarioPost);
 
 router.get('/reset_password', (req, res) => {
-   res.sendFile(__dirname + '/public/pages/auth/reset_password.html');
+   if (!req.session.autenticado) {
+      res.sendFile(__dirname + '/public/pages/auth/reset_password.html');
+   } else {
+      res.redirect('/inicio')
+   }
 });
 router.post('/reset_password', cambioPasswordPost);
 

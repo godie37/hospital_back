@@ -53,6 +53,14 @@
               <a class="nav-link enlaces text-uppercase" href="/pages/contacto.html"><box-icon
                   name='message-dots'></box-icon> Contacto</a>
             </li>
+            <li class="nav-item">
+							<a class="nav-link enlaces text-uppercase" href="/login"><box-icon type='solid' name='user'></box-icon> Login</a>
+						</li>
+						<li class="nav-item">
+							<form action="/logout" method="post" id="form_logout">
+								<button class="nav-link enlaces text-uppercase" type="submit" style="border:transparent;"><box-icon type='solid' name='user-x'></box-icon>Logout</button>
+							</form>
+						</li>
           </ul>
         </div>
       </div>
@@ -104,6 +112,7 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 
+    <script src="../js/validador_session.js" type="module"></script>
 </body>
 
 </html>

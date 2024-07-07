@@ -11,11 +11,12 @@ import {
    editarMedicoPost,
    eliminarMedicoPost,
    solicitarTurnoPost,
-   buscarAgendaPost
+   buscarAgendaGet
 } from '../controllers/ctrl.medicos.js';
 
 import {
-   validacionMedico
+   validacionMedico,
+   validacionTurno
 } from '../middleware/midd.medicos.js'
 
 import {
@@ -45,7 +46,7 @@ router.get('/medicos/edit/:id', authCheckRolInterno, (req, res) => {
 })
 // Recupero datos del médico
 router.get('/api/medico/:id', medicoByIdGet)
-router.post('/medicos/edit/:id', authCheckRolInterno, validacionMedico, editarMedicoPost)
+router.put('/medicos/edit/:id', authCheckRolInterno, validacionMedico, editarMedicoPost)
 
 
 // Eliminar médico
@@ -57,7 +58,7 @@ router.get('/turnero', authCheckRolExterno, (req, res) => {
    res.sendFile(__dirname + '/public/pages/medicos/turnero.html');
 })
 
-router.post('/turnero', authCheckRolExterno, solicitarTurnoPost)
+router.post('/turnero', authCheckRolExterno,validacionTurno, solicitarTurnoPost)
 
 
 // Agenda
@@ -65,6 +66,6 @@ router.get('/agenda', authCheckRolInterno, (req, res) => {
    res.sendFile(__dirname + '/public/pages/medicos/agenda.html');
 })
 
-router.post('/agenda', authCheckRolInterno, buscarAgendaPost)
+router.get('/api/agenda/:medico/:turno', authCheckRolInterno, buscarAgendaGet)
 
 export default router;

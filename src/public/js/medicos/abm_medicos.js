@@ -2,7 +2,6 @@ import { validacionBlur } from '../validaciones.js'
 
 let selectEspecialidad = document.getElementById('especialidad')
 let form_medicos = document.getElementById('form_medicos')
-let btn_form_medicos = document.getElementById('btn_form_medicos')
 let error_dia_atencion = document.getElementById('error_dia_atencion')
 let dias_seleccionados = document.getElementById('dias_seleccionados')
 let tit_form = document.getElementById('tit_form')
@@ -13,23 +12,14 @@ window.addEventListener("load", () => {
 
    query.find((q) => {
       if (q == 'crear') {
-         form_medicos.setAttribute('action', '/medicos/crear')
          tit_form.innerHTML = 'Nuevo médico'
       } else if (q == 'edit') {
          obtener_medico()
-         form_medicos.setAttribute('action', '/medicos/edit/' + query[query.length - 1])
          tit_form.innerHTML = 'Editar médico'
       }
    })
-
-   
 });
 
-const menejoErrores = async () => {
-   const RESP = await fetch('medicos/edit/' + query[query.length - 1]);
-   const ERRORES = await RESP.json();
-   console.log(ERRORES)
-}
 
 const obtener_especialidades = async () => {
    const RESP = await fetch("/api/especialidades");
@@ -38,7 +28,6 @@ const obtener_especialidades = async () => {
 };
 
 const obtener_medico = async () => {
-   menejoErrores()
    let id = query[query.length - 1];
    const RESP = await fetch("/api/medico/" + id);
    const MEDICO = await RESP.json();
@@ -86,9 +75,20 @@ const recuperarDatosMedico = (medico) => {
    })
 }
 
-btn_form_medicos.addEventListener('click', e => {
+form_medicos.addEventListener('submit', async e => {
    e.preventDefault()
+   let ruta
+   let respuesta
    let dias_atencion = []
+
+   query.find((q) => {
+      if (q == 'crear') {
+         ruta = '/medicos/crear'
+      } else if (q == 'edit') {
+         ruta = '/medicos/edit/' + query[query.length - 1]
+      }
+   })
+
    let claves_form = {
       'nombre': document.getElementById('nombre').value,
       'apellido': document.getElementById('apellido').value,
@@ -104,35 +104,62 @@ btn_form_medicos.addEventListener('click', e => {
 
    if (validacionBlur(claves_form)) {
       if (dias_atencion.length > 0) {
-         let pregunta = ''
-         query.find((q) => {
-            if (q == 'crear') {
-               pregunta = "Crear médico?"
-            } else if (q == 'edit') {
-               pregunta = "Editar médico?"
-            }
-         })
+         error_dia_atencion.setAttribute('class', 'hidden')
+         dias_seleccionados.value = JSON.stringify(dias_atencion)
+         let arr_img_perfil = (document.getElementById('foto_perfil').value).split(["\\"])
 
-         Swal.fire({
-            title: `${pregunta}`,
-            icon: "question",
-            showConfirmButton: true,
-            confirmButtonColor: "#379237",
-            confirmButtonText: "Confirmar",
-            showCancelButton: true,
-            cancelButtonColor: "#FF1E1E",
-            cancelButtonText: `Cancelar`,
-         }).then((result) => {
-            if (result.isConfirmed) {
-               error_dia_atencion.setAttribute('class', 'hidden')
-               dias_seleccionados.value = JSON.stringify(dias_atencion)
+         const DATA = Object.fromEntries(new FormData(e.target));
 
-               form_medicos.submit()
-            }
+         // Formateo el campo foto_perfil, para que si es un edit y no se modifica la imagen guarda la que viene desde la DB. En caso del crear, se tiene en cuenta que no quede en "undefined" ya que sino no pasa al back
+         DATA.foto_perfil = arr_img_perfil[2] != document.getElementById('foto_perfil_hidden').value && arr_img_perfil[2] != '' && arr_img_perfil[2] != undefined ? arr_img_perfil[2] : (ruta = '/medicos/crear' ? '' : document.getElementById('foto_perfil_hidden').value)
+
+         let method = ruta == '/medicos/crear' ? 'POST' : 'PUT'
+         
+         const res_db = await fetch(`${ruta}`, {
+            method: method,
+            headers: {
+               "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(DATA)
          })
-      } else {
-         error_dia_atencion.innerHTML = 'Debe seleccionar como mínimo un día de atención'
-         error_dia_atencion.setAttribute('style', 'color:red; font-weight: 700;')
+            .then(res => res.json())
+            .then(data => respuesta = data)
+
+         if (respuesta.estado != 'validacion') {
+            const Toast = Swal.mixin({
+               toast: true,
+               position: "top-end",
+               showConfirmButton: false,
+               timer: 1200,
+               timerProgressBar: true,
+               didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+               }
+            });
+            Toast.fire({
+               icon: `${respuesta.estado}`,
+               title: `${respuesta.mensaje}`
+            });
+
+            if (respuesta.estado == 'success') {
+               setTimeout(() => {
+                  form_medicos.reset()
+                  window.location.href = '/medicos'
+               }, 1000);
+            }
+         } else {
+            let msj_error = JSON.parse(respuesta.mensajes)
+            // Muestro los errores del servidor
+            Object.entries(msj_error).forEach(([key, value]) => {
+               document.getElementById('error_' + key).innerHTML = value
+               document.getElementById('error_' + key).setAttribute('style', 'color:red; font-weight: 700;')
+            });
+         }
       }
+
+   } else {
+      error_dia_atencion.innerHTML = 'Debe seleccionar como mínimo un día de atención'
+      error_dia_atencion.setAttribute('style', 'color:red; font-weight: 700;')
    }
 })

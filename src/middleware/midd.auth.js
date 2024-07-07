@@ -5,19 +5,19 @@ export const authSession = session({
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
-    expires: new Date(Date.now() + (30 * 86400 * 1000))
+    expires: new Date(Date.now() + 2629800000)
 })
 
 export const authCheck = (req, res, next) => {
-    // if (req.session.autenticado) {
+    if (req.session.autenticado) {
         next();
-    // } else {
-    //     res.status(401).send('No cuenta con los permisos para ingresar');
-    // }
+    } else {
+        res.redirect('/login');
+    }
 }
 
 export const authCheckRolInterno = (req, res, next) => {
-    if (req.session.rol == 1) {
+    if (req.session.user.rol_id == 1) {
         next();
     } else {
         res.status(401).send('No cuenta con los permisos para ingresar');
@@ -25,7 +25,7 @@ export const authCheckRolInterno = (req, res, next) => {
 }
 
 export const authCheckRolExterno = (req, res, next) => {
-    if (req.session.rol == 2) {
+    if (req.session.user.rol_id == 2) {
         next();
     } else {
         res.status(401).send('No cuenta con los permisos para ingresar');

@@ -28,8 +28,6 @@ function generarCard(medicos, especialidades) {
          }
       })
 
-      let lista_dias = []
-
       let dias = JSON.parse(medico.dias_atencion)
       let horario = JSON.parse(medico.horario_atencion)
 
@@ -39,7 +37,7 @@ function generarCard(medicos, especialidades) {
       card_personal.innerHTML = `
          <div class="card_contenido">
             <h3 class='nombre_personal'>${medico.nombre_completo} - MP ${medico.matricula}</h3>
-               <img src="/img/${medico.foto_perfil}" alt="foto_perfil" class='foto_perfil'>
+               <img src="../../img/${medico.foto_perfil}" alt="foto_perfil" class='foto_perfil'>
                <h4 class='especialidad_personal'>${especialidad_seleccionada}</h4>
                <span class="h5"><b>Atención</b></span>
                <p class='matricula_personal'><strong>Días: </strong>${dias.join(", ")}</p>              

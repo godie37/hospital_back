@@ -57,6 +57,11 @@
                   <li class="nav-item">
 							<a class="nav-link enlaces text-uppercase" href="/login"><box-icon type='solid' name='user'></box-icon> Login</a>
 						</li>
+						<li class="nav-item">
+							<form action="/logout" method="post" id="form_logout">
+								<button class="nav-link enlaces text-uppercase" type="submit" style="border:transparent;"><box-icon type='solid' name='user-x'></box-icon>Logout</button>
+							</form>
+						</li>
                </ul>
             </div>
          </div>
@@ -67,7 +72,7 @@
       <section class="estructura_contenido">
          <h1 id="tit_form"></h1>
 
-         <form method="post" id="form_medicos" class="form_medicos">
+         <form method="post" id="form_medicos" class="form_medicos" enctype="multipart/form-data">
             <section class="campos_form">
                <div class="caja_inputs">
                   <label for="nombre">Nombre</label>
@@ -83,8 +88,9 @@
                </div>
                <div class="caja_inputs">
                   <label for="foto_perfil">Foto perfil</label>
-                  <input type="file" name="foto_perfil" id="foto_perfil" data-validacion='["required"]'>
-                  <span class="hidden" id="existe_archivo" class='form-control'></span>
+                  <input type="file" name="foto_perfil" id="foto_perfil" data-validacion='[]'>
+                  <span class="hidden" id="existe_archivo"></span>
+                  <span class="hidden" id="error_foto_perfil"></span>
                </div>
                <div class="caja_inputs">
                   <label for="matricula">Matricula</label>
@@ -161,7 +167,7 @@
             </section>
 
             <section class="bloque_btn_abm">
-               <button type="button" id="btn_form_medicos" class="btn_enviar_abm">Guardar</button>
+               <button type="submit" id="btn_form_medicos" class="btn_enviar_abm">Guardar</button>
                <a href="/medicos" class="btn_volver_abm" class="enlace_volver">Volver</a>
             </section>
          </form>
@@ -188,6 +194,7 @@
      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
      crossorigin="anonymous"></script>
 
+     <script src="../js/validador_session.js" type="module"></script>
 </body>
 
 </html>
