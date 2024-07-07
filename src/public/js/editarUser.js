@@ -114,7 +114,7 @@ async function eliminarUsuario(data) {
 //**************************************************************/
 //**************************************************************/
 //**************************************************************/
-    
+    // ****  funcion editar usuario *** //
 const editarButton= document.getElementById('EditarUser');
 editarButton.addEventListener('click', async ()=> {
   const editUsername= prompt("Ingrese username del usuario para editar:")
@@ -140,6 +140,7 @@ async function editarUsuario(userName) {
   }
 }
 
+
 function mostrarResultadosEditable(userData) {
   const [usuario] = userData.body[0];
   
@@ -153,36 +154,78 @@ function mostrarResultadosEditable(userData) {
       const valor = usuario[propiedad];
       
       const celdaSearch = document.createElement("td");
-      celdaSearch.textContent = valor;
+      const inputEdit = document.createElement("input");
+      inputEdit.type = "text";
+      inputEdit.value = valor;
+      inputEdit.id = `input-${propiedad}`; // Identificador único para cada input
+      celdaSearch.appendChild(inputEdit);
       filaSearch.appendChild(celdaSearch);
     }
   }
-  
   contenedorSearchUsuarios.appendChild(filaSearch);
-  
+
+ 
+
 }
 
-// function mostrarResultadosEditable(datosUsuario) {
-//   const [usuario] = datosUsuario.body;
+
+  const botonGuardarEdit= document.getElementById('guardarUserEdit')
+
+  botonGuardarEdit.addEventListener('click', async (event) => {
+    event.preventDefault();
+    
+    const userEditado={
+      id: document.getElementById("input-id").value,
+      nombre: document.getElementById("input-nombre").value,
+      apellido: document.getElementById("input-apellido").value,
+      nombre_completo: document.getElementById("input-nombre_completo").value,
+      username: document.getElementById("input-username").value,
+      email: document.getElementById("input-email").value,
+      password: document.getElementById("input-password").value,
+      rol_id: document.getElementById("input-rol_id").value,
+    }
   
-//   const contenedorTablaBusqueda = document.querySelector("#editId #editTbody");
-//   contenedorTablaBusqueda.innerHTML = ""; 
+    try {
+      const response = await fetch(`http://localhost:3000/api/usuarios/update/${userEditado.id}`, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userEditado),
+      });
+      const responseData = await response.json();
+      console.log('Usuario editado:', responseData);
+      alert('Usuario editado correctamente.');
+    } catch (error) {
+      console.error('Error al editar usuario:', error);
+      alert('Hubo un error al editar el usuario.');
+    }
+  });
 
-//   const filaBusqueda = document.querySelector("#editId tr"); // Seleccionar fila de tabla existente
 
-//   const idUsuario = filaBusqueda.querySelector("td:nth-child(1)"); // Seleccionar primera celda (ID)
-//   idUsuario.textContent = usuario.id;
 
-//   const inputNombre = filaBusqueda.querySelector("#newNombreEdit"); // Seleccionar entrada existente
-//   inputNombre.value = usuario.nombre;
 
-//   const inputApellido = filaBusqueda.querySelector("#newApellEdit"); // Seleccionar entrada existente
-//   inputApellido.value = usuario.apellido;
-
-//   const inputEmail = filaBusqueda.querySelector("#newEmailEdit"); // Seleccionar entrada existente
-//   inputEmail.value = usuario.email;
-
-//   contenedorTablaBusqueda.appendChild(filaBusqueda); // No es necesario aquí, ya se ha añadido
+// function mostrarResultadosEditable(userData) {
+//   const [usuario] = userData.body[0];
+  
+//   const contenedorSearchUsuarios = document.querySelector("#editId tbody");
+//   contenedorSearchUsuarios.innerHTML = "";
+  
+//   const filaSearch = document.createElement("tr"); 
+  
+//   for (const propiedad in usuario) {
+//     if (usuario.hasOwnProperty(propiedad)) {
+//       const valor = usuario[propiedad];
+      
+//       const celdaSearch = document.createElement("td");
+//       celdaSearch.textContent = valor;
+//       filaSearch.appendChild(celdaSearch);
+//     }
+//   }
+  
+//   contenedorSearchUsuarios.appendChild(filaSearch);
+  
 // }
 
 
@@ -190,7 +233,22 @@ function mostrarResultadosEditable(userData) {
 
 
 
-// // ************    EDITAR USUARIO    ************     - OK -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // ************    EDITAR USUARIO   OLD NO FUNCIONAAA ************     - OK -
 // async function editarUsuario(usuario) {
 
 //   try {
@@ -265,4 +323,4 @@ function mostrarResultadosEditable(userData) {
 //     alert('Error al actualizar usuario.');
 //   }
 // });
-
+//

@@ -52,13 +52,14 @@ export async function cargar(tabla, data) {
 
 // Updatge. ::::::::::::::::::::::::::::  - OK
 export async function update(query) {
-    const connection = await pool.getConnection()
-    return new Promise((resolve, reject) => {
-        pool.query(query, (error, result) => {
-            connection.release()
-            return error ? reject(error) : resolve(result);
-        })
-    })
+    try {
+        const connection = await pool.getConnection()
+        await connection.query(query)
+        connection.release()
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Error en la consulta')
+    }
 }
 
 // Eliminar. :::::::::::::::::::::::::::: - OK

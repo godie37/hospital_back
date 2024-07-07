@@ -61,13 +61,17 @@ async function updateUsuario(req, res) {
     query = query.slice(0, -2);
 
     // Agrega la condición WHERE
-    query += ` WHERE nombre= "${req.params.nombre}"`;
+    query += ` WHERE id= "${req.params.id}"`;
+
+    console.log('QUERY.................. ', query);
 
     try {
         await update(query);
         success(req, res, 'Usuario actualizado Correctamente...++++++++++++++++++++++++++', 201);
+        
     } catch (error) {
         _error(req, res, error, 500);
+        console.log('ERROR...... ', error);
     }
 }
 
