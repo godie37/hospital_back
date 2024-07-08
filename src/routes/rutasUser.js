@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import { __dirname } from '../app.js'
 import controler from '../controllers/controllerUser.js';
 
 
