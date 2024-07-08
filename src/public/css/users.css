@@ -1,60 +1,70 @@
-tr {
-  background-color: #ccf2f2;
+table {
+  width: 100%;
+  border-collapse: collapse; 
 }
 
 th {
   padding: 10px;
-  border: 1px solid #ddd;
   text-align: center;
+  border: 1px solid #ddd;
+  background-color: #ccf2f2; 
 }
 
 td {
   padding: 10px;
   border: 1px solid #ddd;
-  background-color: rgb(243, 243, 243);
+  background-color: #f3f3f3; 
 }
+
+
+table#new-user,
+table#searchUsername,
+table#editId {
+  margin-bottom: 20px; 
+}
+
 
 label {
   font-size: 18px;
-}
-
-option {
-  padding-right: 180px;
-}
-
-.search-user-form .list-user {
-  margin: 35px 0px 30px 0px;
+  display: block; 
+  margin-bottom: 5px;
 }
 
 .search-container {
-  margin: 15px 0px 15px 0px;
+  margin: 15px 0;
 }
 
-.bt-guardar {
-  margin: 15px 0px 15px 0px;
+.bt-guardar,
+.divEliminar,
+.divEditar {
+  margin: 15px 0;
   text-align: center;
 }
 
 .divEliminar {
-  margin: 15px 0px 15px 0px;
+  display: flex;
+  justify-content: space-between; 
+  width: 40%; 
 }
 
+
 #guardarUser,
-#guardarUserEdit {
-  padding: 10px 30px 10px 30px;
+#guardarUserEdit,
+#EditarUser,
+#searchButton,
+#eliminarUser {
+  padding: 10px 20px;
   border-radius: 5px;
   font-size: 18px;
-  color: rgb(179, 61, 61);
+  cursor: pointer; 
 }
 
 #guardarUser:hover,
 #guardarUserEdit:hover,
 #EditarUser:hover,
 #searchButton:hover {
-  border-radius: 3px;
-  font-size: 20px;
+  background-color: #daefef; 
   color: black;
-  background-color: #daefef;
 }
 
 #eliminarUser:hover {
@@ -63,34 +73,7 @@ option {
 }
 
 #usernameInput {
-  padding-right: 45px;
-  font-size: 20px;
-}
-
-#searchButton,
-#eliminarUser {
-  padding: 1px 20px 1px 20px;
-  border-radius: 5px;
-  font-size: 20px;
-}
-#EditarUser {
-  padding: 1px 20px 1px 20px;
-  border-radius: 5px;
-  font-size: 20px;
-}
-
-table#user {
-  width: 100%;
-}
-
-.list-user {
-  width: 100%;
-}
-
-table#new-user {
-  width: 100%;
-}
-
-table#searchId {
-  width: 100%;
+  width: 300px;
+  padding-right: 30px;
+  font-size: 18px;
 }
