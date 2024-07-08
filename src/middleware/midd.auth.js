@@ -2,7 +2,7 @@ import session from 'express-session';
 import 'dotenv/config';
 
 export const authSession = session({
-    secret: 'hola123',
+    secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
     expires: new Date(Date.now() + 2629800000)
