@@ -5,7 +5,6 @@ import controler from '../controllers/controllerUser.js';
 
 const router= Router();
 
-
 router.get('/api/usuarios', controler.listarUsuarios);
 router.get('/api/usuarios/:username', controler.mostrarUnUsuario);
 router.post('/api/usuarios/new', controler.nuevoUsuario);
