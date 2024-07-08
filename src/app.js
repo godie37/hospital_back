@@ -39,8 +39,10 @@ app.use(authSession)
 app.use('/', rutasAuth);
 app.use('/', rutasGrales);
 app.use('/', authCheck, rutasMedicos);
-
-app.use('/', usuarios);
+app.use('/listarMedicos', (req, res)=>{
+   res.sendFile(__dirname + '/public/pages/listarUser.html');
+});
+app.use('/', authCheck, usuarios);
 
 
 app.listen(port, () => {
