@@ -28,9 +28,9 @@ import {
 router.get('/medicos', authCheckRolInterno, (req, res) => {
    res.sendFile(__dirname + '/public/pages/medicos/lista_medicos.html');
 })
-router.get('/api/medicos', mostrarMedicosGet)
+router.get('/api/medicos', authCheckRolInterno, mostrarMedicosGet)
 // Recupero todas las especialidades de los médicos
-router.get('/api/especialidades', mostrarEspecialidadesGet)
+router.get('/api/especialidades', authCheckRolInterno, mostrarEspecialidadesGet)
 
 
 // Crear médico
@@ -45,7 +45,7 @@ router.get('/medicos/edit/:id', authCheckRolInterno, (req, res) => {
    res.sendFile(__dirname + '/public/pages/medicos/abm_medicos.html');
 })
 // Recupero datos del médico
-router.get('/api/medico/:id', medicoByIdGet)
+router.get('/api/medico/:id', authCheckRolInterno, medicoByIdGet)
 router.put('/medicos/edit/:id', authCheckRolInterno, validacionMedico, editarMedicoPost)
 
 
@@ -58,7 +58,7 @@ router.get('/turnero', authCheckRolExterno, (req, res) => {
    res.sendFile(__dirname + '/public/pages/medicos/turnero.html');
 })
 
-router.post('/turnero', authCheckRolExterno,validacionTurno, solicitarTurnoPost)
+router.post('/turnero', authCheckRolExterno, validacionTurno, solicitarTurnoPost)
 
 
 // Agenda

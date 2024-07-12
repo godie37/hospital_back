@@ -111,7 +111,7 @@ form_medicos.addEventListener('submit', async e => {
          const DATA = Object.fromEntries(new FormData(e.target));
 
          // Formateo el campo foto_perfil, para que si es un edit y no se modifica la imagen guarda la que viene desde la DB. En caso del crear, se tiene en cuenta que no quede en "undefined" ya que sino no pasa al back
-         DATA.foto_perfil = arr_img_perfil[2] != document.getElementById('foto_perfil_hidden').value && arr_img_perfil[2] != '' && arr_img_perfil[2] != undefined ? arr_img_perfil[2] : (ruta = '/medicos/crear' ? '' : document.getElementById('foto_perfil_hidden').value)
+         DATA.foto_perfil = arr_img_perfil[2] != document.getElementById('foto_perfil_hidden').value && arr_img_perfil[2] != '' && arr_img_perfil[2] != undefined ? arr_img_perfil[2] : (ruta == '/medicos/crear' ? '' : document.getElementById('foto_perfil_hidden').value)
 
          let method = ruta == '/medicos/crear' ? 'POST' : 'PUT'
          
